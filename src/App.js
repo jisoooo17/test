@@ -2,13 +2,14 @@ import './App.css';
 import {Container, Nav, Navbar, Row, Col} from 'react-bootstrap';
 import bg from "./img/bg.png";
 import data from "./data.js";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from './routes/Detail.js';
 
 function App() {
   let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
+
 
   return (
     <div className="App">
