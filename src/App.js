@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from './routes/Detail.js';
 import axios from "axios";
+import Cart from './routes/Cart.js';
 
 function App() {
   let [shoes, setShoes] = useState(data);
@@ -19,7 +20,7 @@ function App() {
           <Navbar.Brand>Navbar</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={()=>{navigate("/")}}>Home</Nav.Link>
-            <Nav.Link onClick={()=>{navigate("/detail")}}>Detail</Nav.Link>
+            <Nav.Link onClick={()=>{navigate("/cart")}}>Cart</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -64,6 +65,7 @@ function App() {
 
 
         <Route path='/detail/:id' element={<Detail shoes={shoes}/>}></Route>
+        <Route path='/cart' element={<Cart/>}></Route>
 
         <Route path='/about' element={<About/>}>
           <Route path='member' element={<div>member</div>}></Route>
@@ -76,8 +78,10 @@ function App() {
 }
 
 function Card({shoes, i}){
+  let navigate = useNavigate();
+
   return(
-    <div className="col-md-4">
+    <div className="col-md-4" onClick={()=>{navigate(`/detail/${i}`)}}>
       <img src={`https://codingapple1.github.io/shop/shoes${i + 1}.jpg`} width="80%" alt="" />
       <h4>{shoes.title}</h4>
       <p>{shoes.price}원</p>

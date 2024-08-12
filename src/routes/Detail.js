@@ -82,9 +82,10 @@ function TabContent({tab}){
   let [fade, setFade] = useState('')
 
   useEffect(()=>{
-    setTimeout(()=>{setFade("end")}, 100);
+    let timer = setTimeout(()=>{setFade("end")}, 100);
 
     return()=>{
+      clearTimeout(timer);
       setFade("");
     }
   }, [tab])
