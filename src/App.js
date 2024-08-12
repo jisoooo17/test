@@ -88,7 +88,7 @@ function Card({shoes, i}){
 
 function About(){
   return (
-    <div>
+    <div className='tab-cont start end'>
       <h4>회사 정보</h4>
       <Outlet></Outlet>
     </div>
