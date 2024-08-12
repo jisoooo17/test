@@ -3,39 +3,54 @@ import {Container, Nav, Navbar, Row, Col} from 'react-bootstrap';
 import bg from "./img/bg.png";
 import data from "./data.js";
 import { useState } from 'react';
+import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
+import Detail from './routes/Detail.js';
 
 function App() {
-
   let [shoes, setShoes] = useState(data);
+  let navigate = useNavigate();
 
   return (
     <div className="App">
       <Navbar bg="light" data-bs-theme="light">
         <Container>
-          <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+          <Navbar.Brand>Navbar</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
+            <Nav.Link onClick={()=>{navigate("/")}}>Home</Nav.Link>
+            <Nav.Link onClick={()=>{navigate("/detail")}}>Detail</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
 
-      <div className="main-bg" style={{backgroundImage: `url(${bg})`}}></div>
-      {console.log(data)}
+      <Routes>
+        <Route path="/" element={
+          <div>
+            <div className="main-bg" style={{backgroundImage: `url(${bg})`}}></div>
 
-      <div className="container">
-        <div className="row">
-          {
-            shoes.map((q, i)=>{
-              return(
-                <Card shoes={shoes[i]} key={i} i={i}/>
-              )
-            })
-          }
-          
-        </div>
-      </div>
+            <div className="container">
+              <div className="row">
+                {
+                  shoes.map((q, i)=>{
+                    return(
+                      <Card shoes={shoes[i]} key={i} i={i}/>
+                    )
+                  })
+                }
+                
+              </div>
+            </div>
+          </div>
+        }></Route>
+
+
+        <Route path='/detail/:id' element={<Detail shoes={shoes}/>}></Route>
+
+        <Route path='/about' element={<About/>}>
+          <Route path='member' element={<div>member</div>}></Route>
+          <Route path='location' element={<div>location</div>}></Route>
+        </Route>
+        
+      </Routes>
     </div>
   );
 }
@@ -51,4 +66,12 @@ function Card({shoes, i}){
   )
 }
 
+function About(){
+  return (
+    <div>
+      <h4>회사 정보</h4>
+      <Outlet></Outlet>
+    </div>
+  )
+}
 export default App;
