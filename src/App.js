@@ -5,11 +5,12 @@ import data from "./data.js";
 import { useEffect, useState } from 'react';
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from './routes/Detail.js';
+import axios from "axios";
 
 function App() {
   let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
-
+  let [clkCnt, setClkCnt] = useState(1);
 
   return (
     <div className="App">
@@ -40,6 +41,24 @@ function App() {
                 
               </div>
             </div>
+
+            {
+              clkCnt < 3 ? 
+                <button onClick={()=>{
+                  axios.get(clkCnt == 1 ? "https://codingapple1.github.io/shop/data2.json" : "https://codingapple1.github.io/shop/data3.json") 
+                  .then((res)=>{
+                    let newShoes = [...shoes, ...res.data];
+                    setShoes(newShoes);
+                    setClkCnt(clkCnt+=1);
+                    console.log(clkCnt)
+                  })
+                  .catch((err)=>{
+                    console.log(err)
+                  })
+                }}>더보기</button> : (
+                  <div>상품이 없습니다.</div>
+                )
+            }
           </div>
         }></Route>
 
